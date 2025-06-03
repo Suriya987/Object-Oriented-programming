@@ -1,0 +1,64 @@
+using System;
+namespace LibraryApplication
+{
+    public enum Role 
+    {
+        Student , Teacher
+    }
+    
+    public class LibraryManagement
+    {
+        public Role role { get ; protected set; }
+        
+        public virtual void BorrowBook(int numberOfBooks)
+        {
+            if(role == Role.Student && (numberOfBooks>5))
+             Console.WriteLine("For Student only 5 book is allowes to borrow at a time");
+            else
+             Console.WriteLine("Happy Learning");
+        }
+    }
+    
+    public class Student : LibraryManagement
+    {
+       // private Role role=Student;
+       public Student()
+       {
+           role=Role.Student;
+       }
+        
+    }
+    
+    public class Teacher : LibraryManagement
+    {
+        
+        // public Teacher()
+        // {
+        //     role=Teacher;
+        // }
+        
+        public override void BorrowBook(int numberOfBooks)
+        {
+            if(numberOfBooks>10)
+            {
+                Console.WriteLine("You are crossing the limit of Borrowing , Anyway happy Learning");
+            }
+            Console.WriteLine("Happy Learning");
+        }
+    }
+    
+    public class User
+    {
+        public static void Main(string[] args)
+        {
+           Teacher ravi = new Teacher();
+           ravi.BorrowBook(11);
+           
+           Student suriya = new Student();
+           suriya.BorrowBook(6);
+           suriya.BorrowBook(4);
+           
+           Console.ReadLine();
+        }
+    }
+}
