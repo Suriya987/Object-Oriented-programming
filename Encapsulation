@@ -1,0 +1,111 @@
+Bank Account Scenario
+
+using System;
+namespace practice
+{
+
+    //Encapsulation
+    /*
+     Create a class BankAccount with private fields: accountNumber, balance.
+     Provide public methods: Deposit(), Withdraw(), and GetBalance().
+
+     Bonus: Add basic validation for negative deposits or withdrawals.
+
+     */
+    public class Logger
+    {
+        private static readonly Object _lock= new Object();
+        public static Logger Instance { get; private set; }
+
+         private Logger() { }
+
+         public static Logger GetLoggerInstance()
+        {
+            if (Instance == null)  //checking the instance is created or not
+            {
+                lock (_lock)  //provide lock for concurrent request
+                {
+                    if (Instance == null)
+                        Instance = new Logger();
+                }
+            }
+
+            return Instance;
+        }
+
+        public void Log(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+   
+
+    public class BankAccount
+    {
+        public double BalanceAmount { get; private set; }
+        public  long AccountNumber { get; private set; }
+
+        public Logger logger;
+
+        public BankAccount(long number)
+        {
+            AccountNumber = number;
+            BalanceAmount = 0;
+            logger = Logger.GetLoggerInstance();
+        }
+
+        public void Deposit(double amount)
+        {
+            if (amount < 0)
+            {
+                throw new ArgumentException("Amount should be greater than 0");
+            }
+
+            BalanceAmount += amount;
+            logger.Log($"{amount} is added to your Bank Account");
+        }
+
+        public void GetBalance()
+        {
+            logger.Log($"Your Balance is : {BalanceAmount} ");
+        }
+
+        public void Withdraw(double amount)
+        {
+            if (amount < 0)
+            {
+                throw new ArgumentException("amount should be greater than 0");
+            }
+
+            if(BalanceAmount < amount)
+            {
+               logger.Log($"Insufficient Balance {BalanceAmount}");
+                return;
+            }
+
+            BalanceAmount -= amount;
+
+            logger.Log($"{amount} is withdrawn Successfully");
+        }
+    }
+
+    public class user
+    {
+        public static void Main(string[] args)
+        {
+            BankAccount Suriya = new BankAccount(941654717162);
+
+            //Positive Scenario
+            Suriya.Deposit(140000.87);
+            Suriya.Withdraw(30777);
+            Suriya.GetBalance();
+
+            //Negative Scenario
+            Suriya.Withdraw(3000000);
+
+            Console.ReadLine();
+
+
+        }
+    }
+}
