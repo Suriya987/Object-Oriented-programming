@@ -62,3 +62,115 @@ namespace LibraryApplication
         }
     }
 }
+
+
+/*
+ You're building a basic university system. There are different types of people in the university:
+Students, Professors, and Staff. All of them share some common properties and behaviors, 
+but also have specific behaviors of their own.
+*/
+
+/*
+   Class->Role
+       ->Students 
+       ->Professors
+       ->Staff
+
+      Prop -> Display()  
+           
+ */
+
+using System.Security.Cryptography;
+
+public class Role
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
+
+    public Role(string name, string email)
+    {
+        Name = name;
+        Email = email;
+    }
+    public virtual void Display()
+    {
+        Console.WriteLine("Display here");
+    }
+}
+
+public class Student : Role
+{
+    public int Id { get; set; }
+    public string Course {  get; set; }
+
+    public Student(int id,string Sub,string name , string email):base(name,email) 
+    {
+        Id= id;
+        Course = Sub;
+    }
+
+    public override void Display()
+    {
+        Console.WriteLine($"StudnetId : {Id} , StudentName : {Name} , CourseName :{Course} , Email :{Email}");
+    }
+}
+
+public class Staff : Role
+{
+    public string Department { get; set; }
+
+    public Staff(string department,string name  , string email):base (name,email) 
+    {
+        Department = department;
+    }
+
+    public override void Display()
+    {
+        Console.WriteLine($"Name : {Name} , Email : {Email} , Department : {Department}");
+    }
+}
+
+public class Professor : Role
+{
+    public int Id { get; set; }
+
+    public string Subject { get; set; }
+
+    public Professor(int id,string Subject,string Name, String Email): base(Name,Email)
+    {
+        Id= id;
+        this.Subject = Subject;
+    }
+
+    public override void Display()
+    {
+        Console.WriteLine($"Name : {Name} ,Email :{Email} , Id : {Id} , Subject : {Subject}");
+    }
+}
+
+public class user
+{
+    public static void Main(string[] args)
+    {
+        Role suriya = new Student(11, "DSA", "suriya", "suriay@gmail.com");
+        Role Moorthy = new Professor(34, "Maths", "Moorthy", "Moorthy@gmail.com");
+        Role Kannama = new Staff("WatchMan", "Kannama", "Kn@gmail.com");
+
+        List<Role> roles = new List<Role>();
+        roles.Add(suriya);
+        roles.Add(Moorthy);
+        roles.Add(Kannama);
+
+        foreach (Role role in roles)
+        {
+            role.Display();
+        }
+
+        Console.ReadLine();
+    }
+}
+
+
+
+
+
