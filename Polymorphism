@@ -1,0 +1,55 @@
+/*
+ You are building a system that processes different types of payments.
+Each payment method (CreditCard, PayPal, UPI) processes payment differently.
+
+You will demonstrate:
+
+Runtime polymorphism using method overriding.
+
+Compile-time polymorphism using method overloading.
+
+ */
+
+
+public  interface  IPayment
+{
+    void ProcessPayment(int amount);
+}
+
+public class PhonePe : IPayment
+{
+    public void ProcessPayment(int amount)
+    {
+        Console.WriteLine($"{amount} paid via PhonePe");
+    }
+
+    public void ProcessPayment(int amount,string upiId)  //overloading becoz here we have processpayment 2 but both will differ based on the parameter 
+    {
+        Console.WriteLine($"{amount} Process via PhonePe and the UpiId : {upiId}");
+    }
+}
+
+public class Gpay:IPayment
+{
+    public void ProcessPayment(int amount)
+    {
+        Console.WriteLine($"{amount} paid via Gpay");
+    }
+}
+
+public class program
+{
+    public static void Main(string[] args)
+    {
+        IPayment phonepe= new PhonePe();
+        phonepe.ProcessPayment(1000);
+
+        //for checking the overload method
+        PhonePe phonePe2 = new PhonePe();
+        phonePe2.ProcessPayment(10000, "tsuriya110Phonpe");
+
+        IPayment Gpay = new Gpay();
+        Gpay.ProcessPayment(10000);
+        Console.ReadLine();
+    }
+}
