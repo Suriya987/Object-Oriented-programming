@@ -1,0 +1,54 @@
+public abstract class Document
+{
+    public string Name { get; set; }
+
+    public Document(string name)
+    {
+        this.Name = name;
+    }
+
+    public abstract void OpenDocument();
+
+    public void PreviewName()
+    {
+        Console.WriteLine($"Document Preview; {Name}");
+    }
+    
+}
+
+public class PDFDocument : Document
+{
+    public PDFDocument(string name) : base(name) { }
+
+    public override void OpenDocument()
+    {
+        Console.WriteLine($"Opening the Document : {Name}");
+    }
+
+}
+
+public class WordDocument : Document
+{
+    public WordDocument(string name) : base(name) { }
+
+    public override void OpenDocument()
+    {
+        Console.WriteLine($"Opening a Document : {Name}");
+    }
+}
+
+public class program
+{
+    public static void Main(string[] args)
+    {
+        Document pdf = new PDFDocument("LogicText.Pdf");
+        pdf.OpenDocument();
+        pdf.PreviewName();
+
+        Document Word = new WordDocument("DSLogictext.Wrd");
+        Word.OpenDocument();
+        Word.PreviewName();
+
+        Console.ReadLine();
+    }
+}
